@@ -44,16 +44,16 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted, onBeforeUnmount } from "vue";
 import { User, Lock } from "@element-plus/icons-vue";
-import { login, getInfo } from "@/api/manager";
+import { login } from "@/api/manager";
 import { setToken } from "@/composables/auth";
 import { useRouter } from "vue-router";
-import {toast} from "@/composables/util";
-import {useStore} from "vuex"
+import { toast } from "@/composables/util";
+import { useStore } from "vuex";
 
 const router = useRouter();
-const store=useStore()
+const store = useStore();
 const form = reactive({
   username: "",
   password: ""
@@ -100,13 +100,10 @@ function submit() {
     login(form.username, form.password)
       .then((res) => {
         //提示成功消息
-        toast("登录成功!")
+        toast("登录成功!");
         //设置token
         setToken(res.token);
-        //获取用户信息
-        getInfo().then((res) => {
-          store.commit("SET_USERINFO",res)
-        });
+
         router.push("/");
       })
       .finally(() => {
@@ -114,6 +111,21 @@ function submit() {
       });
   });
 }
+//监听回车事件
+function onKeyup(e) {
+  if (e.key==="Enter"){
+    submit()
+  }
+
+}
+//添加键盘监听
+onMounted(()=>{
+  document.addEventListener("keyup",onKeyup)
+})
+//移除键盘监听
+onBeforeUnmount(()=>{
+  document.removeEventListener("keyup",onKeyup)
+})
 </script>
 
 <style scoped>
