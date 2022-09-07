@@ -1,19 +1,31 @@
 import { createRouter, createWebHistory } from "vue-router";
 import NotFound from "@/pages/404.vue"
-import Login from "@/pages/login.vue"
-import Index from "@/pages/index.vue"
+import Login from "@/pages/Login.vue"
+import Index from "@/pages/Index.vue"
+import Admin from "@/layouts/Admin.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      component:Index
-
+      component:Admin,
+      children:[
+        {
+          path:"/",
+          component:Index,
+          meta:{
+            title:'首页'
+          }
+        }
+      ]
     },
     {
       path:"/login",
-      component:Login
+      component:Login,
+      meta:{
+        title: '登录'
+      }
     },
     {
       path: "/about",

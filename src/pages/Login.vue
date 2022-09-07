@@ -45,7 +45,6 @@
 
 <script setup>
 import { ref, reactive, onMounted, onBeforeUnmount } from "vue";
-import { User, Lock } from "@element-plus/icons-vue";
 import { login } from "@/api/manager";
 import { setToken } from "@/composables/auth";
 import { useRouter } from "vue-router";

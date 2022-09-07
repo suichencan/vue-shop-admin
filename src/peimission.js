@@ -19,8 +19,9 @@ router.beforeEach(async (to, from, next) => {
   }
 
   //如果用户登陆了,自动获取用户信息,并存在vuex中
-  if (token){
-    await store.dispatch("getinfo")
+  if (token) {
+    await store.dispatch("getinfo");
   }
+  document.title = (to.meta.title ? to.meta.title : "") + "--Vue后台管理系统";
   next();
 });
